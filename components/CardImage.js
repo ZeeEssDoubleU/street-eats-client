@@ -9,6 +9,8 @@ const CardImage = (props) => {
 	const [imageLoaded, setImageLoaded] = useState(false);
 	const cardMediaRef = useRef();
 
+	console.log("card images:", props.image);
+
 	return (
 		<Container ref={cardMediaRef}>
 			<ProgressiveImage_Overlay
