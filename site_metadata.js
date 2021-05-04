@@ -1,4 +1,4 @@
-import theme from "./styles/theme";
+import { theme } from "./styles"
 
 export default {
 	title: "Street Eats",
@@ -8,4 +8,4 @@ export default {
 	theme_primary: theme.palette.primary.main,
 	keywords: "street eats, food delivery, react app, next.js app",
 	lang: "en",
-};
+}

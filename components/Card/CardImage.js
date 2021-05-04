@@ -1,28 +1,34 @@
-import React, { useState, useRef } from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React, { useState, useRef } from "react"
+import styled from "styled-components"
 // import components
-import { CardMedia } from "@material-ui/core";
-import { Skeleton } from "@material-ui/lab";
-import LazyLoad from "react-lazyload";
-// import utils
-import useLayoutEffect from "../../utils/useIsomorphicLayoutEffect";
+import { CardMedia } from "@material-ui/core"
+import { Skeleton } from "@material-ui/lab"
+import LazyLoad from "react-lazyload"
+import { useIsomorphicEffect } from "../../hooks"
 
-const CardImage = (props) => {
-	const [image_loaded, setImageLoaded] = useState(false);
-	const [imageUrl, setImageUrl] = useState();
-	const imageContainerRef = useRef();
+// ***********
+// component
+// ***********
 
-	useLayoutEffect(() => {
-		const imageContainer = imageContainerRef.current;
-		const imageContainerWidth = imageContainer.offsetWidth;
-		const imageContainerWidth_125x = imageContainerWidth * 1.25;
+export default function CardImage(props) {
+	const [image_loaded, setImageLoaded] = useState(false)
+	const [imageUrl, setImageUrl] = useState()
+	const imageContainerRef = useRef()
+	const imageUrl_low = props.image
+		? `${process.env.NEXT_PUBLIC_CLOUDINARY_URL_PREFIX}/dpr_auto,q_25,e_vectorize/${props.image.formats.thumbnail.hash}${props.image.ext}`
+		: null
+
+	useIsomorphicEffect(() => {
+		const imageContainer = imageContainerRef.current
+		const imageContainerWidth = imageContainer.offsetWidth
+		const imageContainerWidth_125x = imageContainerWidth * 1.25
 
 		// full image quality determined by container dimensions above
-		setImageUrl(
-			`${process.env.NEXT_PUBLIC_CLOUDINARY_URL_PREFIX}/w_${imageContainerWidth_125x},dpr_auto,q_auto/${props.image.hash}${props.image.ext}`,
-		);
-	}, []);
+		props.image &&
+			setImageUrl(
+				`${process.env.NEXT_PUBLIC_CLOUDINARY_URL_PREFIX}/w_${imageContainerWidth_125x},dpr_auto,q_auto/${props.image.hash}${props.image.ext}`,
+			)
+	}, [])
 
 	return (
 		<Container ref={imageContainerRef}>
@@ -35,7 +41,7 @@ const CardImage = (props) => {
 				{/* low quality image */}
 				<ProgressiveImage_Overlay
 					component="img"
-					src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL_PREFIX}/dpr_auto,q_25,e_vectorize/${props.image.formats.thumbnail.hash}${props.image.ext}`}
+					src={imageUrl_low}
 					image_loaded={image_loaded === true ? "true" : "false"}
 				/>
 			</LazyLoad>
@@ -49,24 +55,24 @@ const CardImage = (props) => {
 					onLoad={() => {
 						// only setImageLoaded to true if component loads with image url
 						if (imageUrl !== "undefined") {
-							setImageLoaded(true);
+							setImageLoaded(true)
 						}
 					}}
 				/>
 			</LazyLoad>
 		</Container>
-	);
-};
+	)
+}
 
-CardImage.propTypes = {};
-
-export default CardImage;
+// ***********
+// styles
+// ***********
 
 const Container = styled.div`
 	position: relative;
 	height: 15rem;
 	overflow: hidden;
-`;
+`
 const StyledSkeleton = styled(Skeleton)`
 	position: absolute;
 	z-index: ${(props) => props.theme.card.zIndex};
@@ -74,7 +80,7 @@ const StyledSkeleton = styled(Skeleton)`
 	left: 0;
 	width: 100%;
 	height: 100%;
-`;
+`
 const ProgressiveImage_Overlay = styled(CardMedia)`
 	position: absolute;
 	z-index: ${(props) => props.theme.card.zIndex + 1};
@@ -85,7 +91,7 @@ const ProgressiveImage_Overlay = styled(CardMedia)`
 	filter: blur(4px);
 	opacity: ${(props) => (props.image_loaded === "true" ? 0 : 1)};
 	transition: opacity 1s;
-`;
+`
 const ProgressiveImage = styled(CardMedia)`
 	position: absolute;
 	z-index: ${(props) => props.theme.card.zIndex};
@@ -93,4 +99,4 @@ const ProgressiveImage = styled(CardMedia)`
 	left: 0;
 	width: 100%;
 	height: 100%;
-`;
+`

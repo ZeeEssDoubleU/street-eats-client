@@ -1,7 +1,10 @@
 // import components
-import LoginPage from "../components/Auth/LoginPage";
+import Login from "../components/Pages/Login"
 
-// ******************
+// ***********
 // component
-// ******************
-export default (props) => <LoginPage {...props} />;
+// ***********
+
+export default function LoginPage(props) {
+	return <Login {...props} />
+}

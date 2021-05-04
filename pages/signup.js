@@ -1,7 +1,10 @@
 // import components
-import SignupPage from "../components/Auth/SignupPage";
+import Signup from "../components/Pages/Signup"
 
-// ******************
+// ***********
 // component
-// ******************
-export default (props) => <SignupPage {...props} />;
+// ***********
+
+export default function SignupPage(props) {
+	return <Signup {...props} />
+}

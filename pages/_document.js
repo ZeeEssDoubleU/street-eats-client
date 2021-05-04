@@ -1,51 +1,63 @@
-import React from "react";
-import Document, { Html, Head, Main, NextScript } from "next/document";
-import { ServerStyleSheets as StyleSheets_mui } from "@material-ui/core/styles";
-import { ServerStyleSheet as StyleSheet_sc } from "styled-components";
-import theme from "../styles/theme";
-import site_metadata from "../site_metadata.js";
+import React from "react"
+import Document, { Html, Head, Main, NextScript } from "next/document"
+// import styles / theme
+import { ServerStyleSheets as StyleSheets_mui } from "@material-ui/core/styles"
+import { ServerStyleSheet as StyleSheet_sc } from "styled-components"
+import { theme } from "../styles"
+// import metadata
+import site_metadata from "../site_metadata"
 
-export default class MyDocument extends Document {
-	static async getInitialProps(ctx) {
-		const styleSheet_sc = new StyleSheet_sc();
-		const styleSheets_mui = new StyleSheets_mui();
-		const originalRenderPage = ctx.renderPage;
+// ***********
+// component
+// ***********
 
-		try {
-			ctx.renderPage = () =>
-				originalRenderPage({
-					enhanceApp: (App) => (props) =>
-						styleSheet_sc.collectStyles(
-							styleSheets_mui.collect(<App {...props} />),
-						),
-				});
-
-			const initialProps = await Document.getInitialProps(ctx);
-
-			return {
-				...initialProps,
-				styles: (
-					<>
-						{initialProps.styles}
-						{styleSheets_mui.getStyleElement()}
-						{styleSheet_sc.getStyleElement()}
-					</>
-				),
-			};
-		} finally {
-			styleSheet_sc.seal();
-		}
-	}
+export default class _Document extends Document {
 	render() {
 		return (
-			<Html>
-				<Head />
+			<Html lang={site_metadata.lang}>
+				<Head>
+					{/* PWA primary color */}
+					<meta name="theme-color" content={theme.palette.primary.main} />
+				</Head>
 				<body>
 					<Main />
 					<NextScript />
 				</body>
 			</Html>
-		);
+		)
+	}
+}
+
+// ***********
+// props
+// ***********
+
+_Document.getInitialProps = async function (ctx) {
+	const styleSheet_sc = new StyleSheet_sc()
+	const styleSheets_mui = new StyleSheets_mui()
+	const originalRenderPage = ctx.renderPage
+
+	try {
+		ctx.renderPage = () =>
+			originalRenderPage({
+				enhanceApp: (App) => (props) =>
+					styleSheet_sc.collectStyles(
+						styleSheets_mui.collect(<App {...props} />),
+					),
+			})
+
+		const initialProps = await Document.getInitialProps(ctx)
+
+		return {
+			...initialProps,
+			styles: [
+				...React.Children.toArray(initialProps.styles),
+				styleSheets_mui.getStyleElement(),
+				styleSheet_sc.getStyleElement(),
+			],
+		}
+	} finally {
+		styleSheet_sc.seal()
 	}
 }
 

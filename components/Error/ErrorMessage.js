@@ -1,28 +1,26 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from "react"
 // import components
 import {
 	Container,
 	CardHeader,
 	CardContent,
-	Grid,
 	Typography,
-} from "@material-ui/core";
-import Card_withElevate from "../Card/Card_withElevate";
+} from "@material-ui/core"
+import { Card_Elevate } from "../Card"
 
-const ErrorMessage = (props) => {
+// ***********
+// component
+// ***********
+
+export default function ErrorMessage(props) {
 	return (
 		<Container maxWidth="sm">
-			<Card_withElevate>
+			<Card_Elevate>
 				<CardHeader title={props.title}></CardHeader>
 				<CardContent>
 					<Typography>{props.message}</Typography>
 				</CardContent>
-			</Card_withElevate>
+			</Card_Elevate>
 		</Container>
-	);
-};
-
-ErrorMessage.propTypes = {};
-
-export default ErrorMessage;
+	)
+}

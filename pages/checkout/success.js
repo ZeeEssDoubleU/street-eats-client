@@ -1,27 +1,43 @@
 // import components
-import SuccessPage from "../../components/Checkout/SuccessPage";
-import PrivateRoute from "../../components/Auth/PrivateRoute";
+import Success from "../../components/Pages/Checkout/Success"
+import PrivateRoute from "../../components/Auth/PrivateRoute"
 // import utils
-import { creds_areValid } from "../../store/actions/auth";
+import { creds_areValid } from "../../store/actions/auth"
+import { getOrder } from "../../store/actions/order"
 
-// ******************
+// ***********
 // component
-// ******************
-export default ({ order, isAuth, ...props }) => {
+// ***********
+export default function SuccessPage({ order, isAuth, ...props }) {
 	return (
 		<PrivateRoute isAuth={isAuth}>
-			<SuccessPage order={order} {...props} />;
+			<Success order={order} {...props} />
 		</PrivateRoute>
-	);
-};
+	)
+}
 
-// ******************
+// ***********
 // inital props
-// ******************
-export const getServerSideProps = async (ctx, req) => {
-	const order = ctx.query?.order ? JSON.parse(ctx.query.order) : null;
+// ***********
 
-	const isAuth = creds_areValid(ctx);
+export const getServerSideProps = async (ctx) => {
+	// TODO: need to create check so that only logged in user can see their orders
+	//		-	check order user id
+	//		-	check that logged in user matches order user id
 
-	return { props: { order, isAuth } };
-};
+	// TODO: create dashboard where user can check their orders
+	//		- filter orders matching user id (db)
+	// 	- display all orders
+
+	const orderId = ctx.query?.order
+	const order = orderId && (await getOrder(orderId))
+
+	const isAuth = creds_areValid(ctx)
+
+	return {
+		props: {
+			order: order || null,
+			isAuth,
+		},
+	}
+}

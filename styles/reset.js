@@ -1,7 +1,7 @@
 // @ts-nocheck
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components"
 
-export default createGlobalStyle`
+export const resetStyle = createGlobalStyle`
    /* Box sizing rules */
    *,
    *::before,
@@ -37,7 +37,6 @@ export default createGlobalStyle`
 
    /* Set core body defaults */
    body {
-      min-height: 100vh;
       scroll-behavior: smooth;
       text-rendering: optimizeSpeed;
       line-height: 1.5;
@@ -60,7 +59,7 @@ export default createGlobalStyle`
 
    /* Make images easier to work with */
    img {
-      max-width: 100%;
+      max-width: 100vw;
       display: block;
    }
 
@@ -77,6 +76,12 @@ export default createGlobalStyle`
       font: inherit;
    }
 
+   /* // Prevent link and button descendants from being target of click events (for GTM)
+   a *, 
+   button * {
+      pointer-events: none;
+   } */
+
    /* Remove all animations and transitions for people that prefer not to see them */
    @media (prefers-reduced-motion: reduce) {
       * {
@@ -86,4 +91,4 @@ export default createGlobalStyle`
          scroll-behavior: auto !important;
       }
    }
-`;
+`

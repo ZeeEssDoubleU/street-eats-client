@@ -1,42 +1,36 @@
-import React, { useEffect } from "react";
-import { StylesProvider, CssBaseline } from "@material-ui/core";
-import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
-import { ThemeProvider } from "styled-components";
+import { useEffect } from "react"
 // import styles
-import theme from "../styles/theme";
-import ResetStyle from "../styles/reset";
-import GlobalStyle from "../styles/global";
+import { StyleProvider, ThemeProvider } from "../styles"
 // import components
-import Layout from "../components/Layout/Layout";
+import Layout from "../components/Layout/Layout"
 // import store
-import { StoreProvider } from "../store/useStore";
+import { StoreProvider } from "../store/useStore"
 
-export default function _app({ Component, pageProps }) {
+// ***********
+// component
+// ***********
+
+export default function _App({ Component, pageProps }) {
 	// remove server side styles
 	// avoids style duplication when same styles loaded by client
-	const removeServerStyles = async () => {
-		const jssStyles = await document.querySelector("#jss-server-side");
-		jssStyles?.parentNode.removeChild(jssStyles);
-	};
+	async function removeServerStyles() {
+		const jssStyles = await document.querySelector("#jss-server-side")
+		jssStyles?.parentNode.removeChild(jssStyles)
+	}
 
 	useEffect(() => {
-		removeServerStyles();
-	}, []);
+		removeServerStyles()
+	}, [])
 
 	return (
-		// injectFirst injects MUI styles at top of document head so they can be overwritten
-		<StylesProvider injectFirst>
-			{/* mui style baseline */}
-			<CssBaseline />
-			<MuiThemeProvider theme={theme}>
-				<ThemeProvider theme={theme}>
-					<StoreProvider>
-						<Layout {...pageProps}>
-							<Component {...pageProps} />
-						</Layout>
-					</StoreProvider>
-				</ThemeProvider>
-			</MuiThemeProvider>
-		</StylesProvider>
-	);
+		<StyleProvider>
+			<ThemeProvider>
+				<StoreProvider>
+					<Layout {...pageProps}>
+						<Component {...pageProps} />
+					</Layout>
+				</StoreProvider>
+			</ThemeProvider>
+		</StyleProvider>
+	)
 }

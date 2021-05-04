@@ -1,15 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
 // import components
-import { Typography } from "@material-ui/core";
-import CartList from "./CartList";
+import { Typography } from "@material-ui/core"
+import CartList from "./CartList"
 
-// ******************
+// ***********
 // component
-// ******************
+// ***********
 
-const Cart = (props) => {
+export default function Cart(props) {
 	return (
 		<Main component="main">
 			<StyledGrid>
@@ -20,14 +20,11 @@ const Cart = (props) => {
 				<CartList cart="shopping" />
 			</StyledGrid>
 		</Main>
-	);
-};
+	)
+}
 
-Cart.propTypes = {};
-export default Cart;
-
-// ******************
+// ***********
 // styles
-// ******************
+// ***********
 
-import { Main, StyledGrid } from "../../styles/elements";
+import { Main, StyledGrid } from "../../styles/elements"

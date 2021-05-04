@@ -1,8 +1,9 @@
-const withPWA = require("next-pwa");
+const withPWA = require("next-pwa")
 
 module.exports = withPWA({
 	pwa: {
 		dest: "public",
+		mode: "production",
 	},
 	async redirects() {
 		return [
@@ -11,6 +12,6 @@ module.exports = withPWA({
 				destination: "/restaurants",
 				permanent: true,
 			},
-		];
+		]
 	},
-});
+})

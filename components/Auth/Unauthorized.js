@@ -1,28 +1,25 @@
-import React from "react";
-import PropTypes from "prop-types";
 // import components
 import {
 	Container,
 	CardHeader,
 	CardContent,
-	Grid,
 	Typography,
-} from "@material-ui/core";
-import Card_withElevate from "../Card/Card_withElevate";
+} from "@material-ui/core"
+import { Card_Elevate } from "../Card"
 
-const Unauthorized = (props) => {
+// ***********
+// component
+// ***********
+
+export default function Unauthorized() {
 	return (
 		<Container maxWidth="sm">
-			<Card_withElevate>
+			<Card_Elevate>
 				<CardHeader title="Unauthorized"></CardHeader>
 				<CardContent>
 					<Typography>Please log in.</Typography>
 				</CardContent>
-			</Card_withElevate>
+			</Card_Elevate>
 		</Container>
-	);
-};
-
-Unauthorized.propTypes = {};
-
-export default Unauthorized;
+	)
+}

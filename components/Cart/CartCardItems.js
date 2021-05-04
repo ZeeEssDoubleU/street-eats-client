@@ -1,18 +1,18 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
 // import components
-import { ButtonGroup, Button, Typography } from "@material-ui/core";
+import { ButtonGroup, Button, Typography } from "@material-ui/core"
 // import store
-import useStore from "../../store/useStore";
-import { cart_addItem, cart_removeItem } from "../../store/actions/cart";
+import useStore from "../../store/useStore"
+import { cart_addItem, cart_removeItem } from "../../store/actions/cart"
 
-// ******************
+// ***********
 // component
-// ******************
+// ***********
 
-const CardCardItems = ({ restaurant }) => {
-	const { state, dispatch } = useStore();
+export default function CardCardItems({ restaurant }) {
+	const { state, dispatch } = useStore()
 
 	return (
 		<Grid>
@@ -31,9 +31,9 @@ const CardCardItems = ({ restaurant }) => {
 						<ButtonGroup>
 							<ItemCountButton
 								onClick={() => {
-									const dish = item;
-									const payload = { dish, restaurant };
-									cart_removeItem(payload, state, dispatch);
+									const dish = item
+									const payload = { dish, restaurant }
+									cart_removeItem(payload, state, dispatch)
 								}}
 							>
 								-
@@ -41,9 +41,9 @@ const CardCardItems = ({ restaurant }) => {
 							<ItemCount disabled>{item.quantity}</ItemCount>
 							<ItemCountButton
 								onClick={() => {
-									const dish = item;
-									const payload = { dish, restaurant };
-									cart_addItem(payload, state, dispatch);
+									const dish = item
+									const payload = { dish, restaurant }
+									cart_addItem(payload, state, dispatch)
 								}}
 							>
 								+
@@ -57,33 +57,30 @@ const CardCardItems = ({ restaurant }) => {
 				<Typography variant="h6">${restaurant.items_price}</Typography>
 			</GridBetween>
 		</Grid>
-	);
-};
+	)
+}
 
-CardCardItems.propTypes = {};
-export default CardCardItems;
-
-// ******************
+// ***********
 // styles
-// ******************
+// ***********
 
 const Grid = styled.div`
 	display: grid;
 	grid-gap: ${(props) => props.theme.spacing(2) + "px"};
-`;
+`
 const GridBetween = styled.div`
 	display: grid;
 	grid-template-columns: auto auto;
 	grid-gap: ${(props) => props.theme.spacing(2) + "px"};
 	justify-content: space-between;
-`;
+`
 const GridLeft = styled.div`
 	display: grid;
 	justify-content: left;
-`;
+`
 const ItemCountButton = styled(Button)`
 	padding: 0;
-`;
+`
 const ItemCount = styled(ItemCountButton)`
 	&.Mui-disabled {
 		color: ${(props) => props.theme.button.disabled.color};
@@ -91,4 +88,4 @@ const ItemCount = styled(ItemCountButton)`
 		border-right-color: ${(props) =>
 			props.theme.button.disabled.borderRightColor};
 	}
-`;
+`

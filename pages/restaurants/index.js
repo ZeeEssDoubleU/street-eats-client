@@ -1,31 +1,32 @@
-import axios from "axios";
+import axios from "axios"
 // import components
-import RestaurantsPage from "../../components/Restaurants/RestaurantsPage";
+import Restaurants from "../../components/Pages/Restaurants"
 
-// ******************
+// ************
 // component
-// ******************
+// ************
 
-export default ({ restaurants }) => {
-	return <RestaurantsPage restaurants={restaurants} />;
-};
+export default function RestaurantsPage({ restaurants }) {
+	return <Restaurants restaurants={restaurants} />
+}
 
-// ******************
+// ************
 // initial props
-// ******************
-export const getStaticProps = async () => {
+// ************
+
+export async function getStaticProps() {
 	try {
 		const { data } = await axios.get(
 			`${process.env.NEXT_PUBLIC_API_URL}/restaurants`,
-		);
-		const restaurants = data;
+		)
+		const restaurants = data
 
 		return {
 			props: {
 				restaurants,
 			},
-		};
+		}
 	} catch (error) {
-		console.error(error);
+		console.error(error)
 	}
-};
+}
